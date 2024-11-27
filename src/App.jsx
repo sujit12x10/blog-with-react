@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import authService from './appwrite/auth'
 import { login, logout } from './store/authSlice'
-import { Footer, Header, Loader } from './components/index.js'
+import { Footer, Header, Loader, Container } from './components/index.js'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { Container } from "../src/components/index"
 import appwriteService from './appwrite/config'
 import { setAllPosts } from "./store/postSlice.js"
 

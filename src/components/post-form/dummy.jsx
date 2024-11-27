@@ -144,10 +144,3 @@ export const PostForm = ({post}) => {
         </form>
     )
 }
-
-// content: "<p>Hello <strong>Guys post</strong>!</p>"
-// featuredImage: "673efd7000353d34f61a"
-// image: FileList {0: File, length: 1}
-// slug: "hello-guys"
-// status: "active"
-// title: "Hello Guys"

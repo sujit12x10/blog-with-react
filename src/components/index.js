@@ -18,6 +18,7 @@ export { Post } from "./pages/Post"
 export { About } from "./pages/About"
 export { Loader } from "../components/Loader"
 export { Heading } from "../components/Heading"
+export { GoBack } from "../components/GoBack"
 
 import Input from "./Input"
 import Select from "./Select"

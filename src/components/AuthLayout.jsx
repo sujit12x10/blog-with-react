@@ -8,10 +8,10 @@ export const Protected = ({children, authentication=true}) => {
 
    if (authStatus || authentication) return children
    if (!authStatus && !authentication) 
-      return (<div className="text-center pt-10">
-                  <h1 className="font-bold text-3xl text-gray-800">You must login first to continue!</h1>
+      return (<div className="text-center pt-20">
+                  <h1 className="font-extrabold underline font-Bebas text-3xl text-gray-800">You must login first to continue!</h1>
                      <Link to="/login">
-                        <button className="mt-32 bg-gray-900 text-xl text-white font-racing px-8 py-2 w-80 rounded hover:bg-slate-400 hover:text-gray-900 duration-500">Login</button>
+                        <button className="mt-20 bg-gray-900 text-xl text-white font-racing px-8 py-2 w-80 rounded hover:bg-slate-400 hover:text-gray-900 duration-500">Login</button>
                      </Link>
                      <br />
                      <Link to="/signup">

@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       fontFamily :{
-        "racing": ["Racing Sans One", "sans-serif"]
+        "racing": ["Racing Sans One", "sans-serif"],
+        "Montserrat": ["Montserrat", "sans-serif"],
+        "Bebas": ["Bebas Neue", "sans-serif"],
       }
     },
   },
