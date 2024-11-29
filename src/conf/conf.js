@@ -6,4 +6,9 @@ const conf = {
     appwriteBucketId: String(import.meta.env.VITE_APPWRITE_BUCKET_ID),
 }
 
+tinymce.init({
+  selector: 'textarea',  // change this value according to your HTML
+  license_key: 'gpl'
+});
+
 export default conf
