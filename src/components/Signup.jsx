@@ -31,8 +31,8 @@ export const Signup = () => {
     }
 
     return (
-        <div className="flex items-center justify-center pb-5">
-            <div className={`mx-auto mt-10 w-full max-w-lg p-10 shadow-2xl bg-white border-t-[5px] border-cyan-300`}>
+        <div className="flex items-center justify-center pb-5 px-6">
+            <div className={`mx-auto mt-10 w-full max-w-lg p-10 shadow-2xl bg-white border-t-[5px] border-gray-700`}>
                 <div className="mb-2 flex justify-center">
                     <Logo text="text-gray-900"/>
                 </div>
