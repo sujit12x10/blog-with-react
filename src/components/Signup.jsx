@@ -36,7 +36,7 @@ export const Signup = () => {
                 <div className="mb-2 flex justify-center">
                     <Logo text="text-gray-900"/>
                 </div>
-                <h2 className="text-center text-2xl mt-5 font-racing">Create an account with us.</h2>
+                <h2 className="text-center text-2xl mt-5">Create an account with us.</h2>
                 <p className="mt-4 text-center text-base text-black/60">
                     Already have an account?
                     <Link to="/login" className="font-medium text-primary transition-all duration-200 hover:underline">
@@ -77,9 +77,9 @@ export const Signup = () => {
                                 required: true,
                             })}
                         />
-                        <Button type="submit" className="w-full py-3">
+                        <button type="submit" className="w-full py-3 bg-[#333] text-white text-sm rounded">
                             Create Account
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>

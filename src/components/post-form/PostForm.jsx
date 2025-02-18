@@ -3,11 +3,20 @@ import { useForm } from "react-hook-form";
 import { Button, Input, Select, RTE } from "../index"
 import appwriteService from "../../appwrite/config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import authService from "../../appwrite/auth";
 
 export const PostForm = ({post}) => {
-
+    const [loading, setLoading] = useState(true)
     const {register, handleSubmit, watch, setValue, control, getValues} = useForm()
+    const navigate = useNavigate()
+    const [user, setUser] = useState(null)
+
+
+    useEffect(() => {
+        authService.getCurrentUser()
+        .then(data => setUser(data))
+        .finally(() => setLoading(false))
+    }, [])
 
     useEffect(() => {
         if (post){
@@ -16,9 +25,6 @@ export const PostForm = ({post}) => {
         }
     }, [post])
 
-
-    const navigate = useNavigate()
-    const userData = useSelector(state => state.auth.userData)
 
     const handleChange = (event) => {
         const {name, value, type, checked} = event.target
@@ -37,7 +43,8 @@ export const PostForm = ({post}) => {
             if (file) {
                 appwriteService.deleteFile(post.featuredImage)
             }
-            
+
+            data.slug = slugTransform(data.title)
             const dbPost = await appwriteService.updatePost(
                 post.$id, {
                     ...data,
@@ -56,9 +63,10 @@ export const PostForm = ({post}) => {
             if (file) {
                 const fileId = file.$id
                 data.featuredImage = fileId
+                data.slug = slugTransform(data.title)
                 const dbPost = await appwriteService.createPost({
                     ...data,
-                    userId: userData.$id,
+                    userId: user.$id,
                 })
 
                 if (dbPost) {
@@ -105,17 +113,6 @@ export const PostForm = ({post}) => {
                     {...register("title", { required: true })}
                 />
 
-                {/* Post slug */}
-
-                <Input
-                    label="Slug :"
-                    placeholder="Slug"
-                    className="mb-4"
-                    {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
-                    }}
-                />
                 {/* Post content */}
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
@@ -146,9 +143,9 @@ export const PostForm = ({post}) => {
                     className="mb-4"
                     {...register("status", { required: true })}
                 />
-                <Button type="submit" bgColor={post ? "bg-gray-800" : undefined} className="w-full mt-4 text-white py-2">
+                <button type="submit" className="w-full mt-4 text-white py-2 bg-[#333] rounded uppercase">
                     {post ? "Update" : "Submit"}
-                </Button>
+                </button>
             </div>
         </form>
     )

@@ -4,14 +4,25 @@ import appwriteService from "../../appwrite/config";
 import { Button, Container, Loader, GoBack } from "../index"
 import parse from "html-react-parser"
 import { useSelector } from "react-redux";
+import authService from "../../appwrite/auth";
+import { useId } from "react";
 
 export const Post = () => {
     const [post, setPost] = useState(null)
+    const postId = useId()
+    const [isOwner, setIsOwner] = useState(false)
     const slug = useParams()
     const navigate = useNavigate()
     const userData = useSelector(state => state.auth.userData)
 
     const isAuthor = post &&  userData ? post.userId === userData.$id : false
+
+    useEffect(() => {
+        authService.getCurrentUser()
+        .then(data => {
+            if (post && data.$id === post.userId) setIsOwner(true)
+        })
+    }, [post])
 
     useEffect(() => {
         if (slug) {
@@ -50,7 +61,7 @@ export const Post = () => {
                 <div className="w-full flex flex-col py-3 px-3 bg-white">
                     <img src={appwriteService.getFilePreview(post.featuredImage)} alt={post.title} className=""/>
                     <div className="w-full mb-6 mt-6 px-4">
-                        <h2 className="text-2xl font-bold font-racing text-center">{post.title}</h2>
+                        <h2 className="text-2xl font-bold text-center">{post.title}</h2>
                         <div className="browser-css mt-2">
                             {parse(post.content)}
                         </div>
@@ -58,16 +69,14 @@ export const Post = () => {
                 
 
                 {
-                    isAuthor && (
-                        <div className="px-4">
+                    isOwner && (
+                        <div className="px-4 space-x-2">
                             <Link to={`/edit-post/${post.$id}`}>
-                                <Button bgColor="bg-gray-800 text-white" className="mr-5 px-4 py-0">
-                                    Edit
-                                </Button>
+                                <button className="bg-[#333] rounded p-1 px-2 text-sm text-white">EDIT</button>
                             </Link>
-                            <Button bgColor="bg-gray-800 text-white" className="px-4 py-0" onClick={deletePost}>
-                                Delete
-                            </Button>
+                            <button className="bg-red-600 rounded p-1 px-2 text-sm text-white" onClick={deletePost}>
+                                DELETE
+                            </button>
                         </div>
                     )
                 }

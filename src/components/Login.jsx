@@ -10,10 +10,10 @@ import { useState } from "react";
 export const Login = () => {
 
     const navigate = useNavigate()
-      
+    const location = useLocation()
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
     const [error, setError] = useState(null)
+    const {register, handleSubmit} = useForm()
 
     const login = async(data) => {
         setError("")
@@ -31,12 +31,15 @@ export const Login = () => {
 
     return (
         <>
-            <div className="flex items-center justify-center w-[90%] mx-auto">
-                <div className={`mx-auto w-full mt-14 max-w-lg shadow-2xl p-10 bg-white border-t-[5px] border-gray-700`}>
+            <div className="flex flex-col items-center justify-center w-[90%] mx-auto py-6">
+                {
+                    location.state?.message && <h2 className="text-red-600 text-xl">{location.state.message}</h2>
+                }
+                <div className={`mx-auto mt-10 w-full max-w-lg shadow-2xl p-10 bg-white border-t-[5px] border-gray-700`}>
                     <div className="mb-2 flex justify-center">
                         <Logo text="text-gray-900"/>
                     </div>
-                    <h2 className="text-center text-2xl font-racing">Sign in to your account</h2>
+                    <h2 className="text-center text-2xl font-">Sign in to your account</h2>
                     <p className="mt-2 text-center text-base text-black/60">
                         Don't have any account?
                         <Link to="/signup" className="font-medium text-primary transition-all duration-200 hover:underline">
@@ -73,7 +76,7 @@ export const Login = () => {
                                     ...register("password",{ required: true})
                                 }
                             />
-                            <Button type="submit" className="w-full text-xl py-3">Sign in</Button>
+                            <button type="submit" className="w-full text-sm py-3 bg-[#333] text-white rounded">SIGN IN</button>
                         </div>
                     </form>
                 </div>

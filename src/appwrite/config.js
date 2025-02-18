@@ -1,4 +1,4 @@
-import conf from "../conf/conf";
+import conf from "../conf/conf"; // appwrite config keys
 import { Client, ID, Databases, Storage, Query, Account } from "appwrite";
 
 class AppwriteService {
@@ -14,12 +14,14 @@ class AppwriteService {
     }
 
     // Create Post
-    async createPost({title, slug, content, featuredImage, status, userId}){
+    async createPost({postId, title, slug, content, featuredImage, status, userId}){
+        console.log(postId);
+        
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
-                slug,
+                ID.unique(),
                 { title, slug, content, featuredImage, status, userId }
             )
         } catch (error){

@@ -6,22 +6,8 @@ import { Container, PostCard, Logo, Loader, Heading } from "../index"
 
 export const Home = () => {
 
-    const [loading, setLoading] = useState(true)
     const [posts, setPosts] = useState(null)
-    const postsArray = useSelector(store => store.posts.data)
-    const authStatus = useSelector(store => store.auth.status)
     
-    useEffect(() => {   
-        if (authStatus){
-            setPosts(postsArray)
-        }
-        setLoading(false)
-    }, [postsArray])
-
-    if (!authStatus){
-        
-    }
-
     // Get Post Date Method
     const getDate = (documnet) => {
         const createdAt = new Date(documnet.$createdAt)
@@ -31,9 +17,14 @@ export const Home = () => {
         return `${date} ${month}, ${year}`
     }
 
-    return (loading || !posts) ?  <Loader /> : (
-        posts ?
-        (<div className="py-8">
+    useEffect(() => {
+        appwriteService.getPosts().then((data) => {
+          setPosts(data.documents)
+        })
+    }, []) 
+
+    return (
+        posts && <div className="p-8">
             <Container>
                 <Heading text="BLOGS"/>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2">
@@ -47,6 +38,6 @@ export const Home = () => {
                     }
                 </div>
             </Container>
-        </div>) : ""
+        </div>
     )
 }

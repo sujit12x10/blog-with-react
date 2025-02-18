@@ -1,6 +1,8 @@
 import { Link, NavLink, useLocation, useNavigate } from "react-router-dom"
+import authService from "../../appwrite/auth"
 import { Container, Logout } from "../index"
-import { useSelector } from "react-redux"
+import { logout } from "../../store/authSlice"
+import { useDispatch, useSelector } from "react-redux"
 import { Logo } from "../../components/index"
 import { GiHamburgerMenu } from "react-icons/gi"
 import { useEffect, useRef, useState } from "react"
@@ -12,6 +14,7 @@ import { GrClose } from "react-icons/gr"
 
 export const Header = () => {
     const authStatus = useSelector(state => state.auth.status)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const {pathname} = useLocation()
     const [isOn, setIsOn] = useState(false)
@@ -23,38 +26,27 @@ export const Header = () => {
         {
             name: "Home",
             slug: "/",
-            active: true
         },
-        {
-            name: "Login",
-            slug: "/login",
-            active: !authStatus
-        },
-        {
-            name: "Signup",
-            slug: "/signup",
-            active: !authStatus
-        },
-        // {
-        //     name: "Blogs",
-        //     slug: "/all-posts",
-        //     active: authStatus
-        // },
         {
             name: "Add Blog",
             slug: "/add-post",
-            active: authStatus
         },
         {
             name: "About",
             slug: "/about",
-            active: true || false
         }
     ]
 
+    const handleLogout = () => {
+        authService.logout().then(() => {
+            dispatch(logout())
+            navigate("/login")
+        })
+    }
+
     return (
         <header className="sticky z-50 top-0">
-            <nav ref={displayRef} className=" bg-gray-900 shadow-md shadow-black px-4 py-2 md:flex">
+            <nav ref={displayRef} className=" bg-gray-900 shadow-black px-4 py-2 md:flex">
                 <div className="mt-1 mb-2">
                     <Logo />
                     <button onClick={() => setIsOn(!isOn)} className="absolute right-2 top-4 md:hidden">
@@ -64,20 +56,20 @@ export const Header = () => {
                     </button>
                 </div>
                 <ul className="ml-auto hidden md:flex">
-                    { navItems.map((item) => item.active ? (
+                    { navItems.map((item) => (
                             <li key={item.name}>
                                 <NavLink to={item.slug} className={(isActive) => 
-                                    `inline-block px-4 py-2 duration-200 hover:bg-black hover:text-cyan-300 rounded text-xl font-racing ${pathname === item.slug ? "text-cyan-200" : "text-[aliceblue]"}`
+                                    `uppercase font-semibold inline-block px-4 py-2 duration-200 hover:bg-black hover:text-cyan-300 rounded text-base font-poppins ${pathname === item.slug ? "text-cyan-200" : "text-[aliceblue]"}`
                                 }>
                                     {item.name}
                                 </NavLink>
                             </li>
-                        ) : null)}
+                        ))}
 
                     {
-                        authStatus && (
-                            <li>
-                                <Logout />
+                         (
+                            <li onClick={handleLogout} className="inline-block px-4 py-2 duration-200 hover:bg-black hover:text-cyan-300 rounded text-base uppercase font-poppins font-semibold text-[aliceblue] cursor-pointer">
+                                Logout
                             </li>
                         )
                     }
@@ -88,7 +80,7 @@ export const Header = () => {
                     { navItems.map((item) => item.active ? (
                                 <li onClick={() => setIsOn(false)} key={item.name} className="hover:bg-gray-700 hover:text-cyan-300 py-3 duration-200 mx-auto flex first:border-t-[1px] first:mt-4">
                                     <NavLink to={item.slug} className={(isActive) => 
-                                        `mx-auto duration-200 text-xl font-racing ${pathname === item.slug ? "text-cyan-200" : "text-white"}`
+                                        `mx-auto duration-200 text-xl ${pathname === item.slug ? "text-cyan-200" : "text-white"}`
                                     }>
                                         {item.name}
                                     </NavLink>
