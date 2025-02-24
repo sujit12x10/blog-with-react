@@ -13,6 +13,15 @@ class AuthService {
         this.account = new Account(this.client)
     }
 
+    // Get User
+    async getUserName(userId){
+        try {
+            const user = await this.account.get(userId)
+        } catch(error){
+            console.log(error)
+        }
+    }
+
     // Account Creation
     async createAccount({ email, password, name}) {
         try {

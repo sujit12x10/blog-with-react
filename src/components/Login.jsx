@@ -5,7 +5,7 @@ import { Button, Select, Input, Logo } from "./index"
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Login = () => {
 
@@ -35,17 +35,11 @@ export const Login = () => {
                 {
                     location.state?.message && <h2 className="text-red-600 text-xl">{location.state.message}</h2>
                 }
-                <div className={`mx-auto mt-10 w-full max-w-lg shadow-2xl p-10 bg-white border-t-[5px] border-gray-700`}>
+                <div className={`mx-auto mt-10 w-full max-w-lg shadow-2xl p-10 bg-white border-t-[5px] border-[#333]`}>
                     <div className="mb-2 flex justify-center">
                         <Logo text="text-gray-900"/>
                     </div>
-                    <h2 className="text-center text-2xl font-">Sign in to your account</h2>
-                    <p className="mt-2 text-center text-base text-black/60">
-                        Don't have any account?
-                        <Link to="/signup" className="font-medium text-primary transition-all duration-200 hover:underline">
-                            <span className="font-bold ml-2 text-blue-600">Signup Here</span>
-                        </Link>
-                    </p>
+                    <h2 className="text-center text-base uppercase text-[#333]">Sign in to your account</h2>
                     {
                         error && <p className="text-orange-500 font-bold mt-8 text-center">
                             {error}
@@ -77,6 +71,11 @@ export const Login = () => {
                                 }
                             />
                             <button type="submit" className="w-full text-sm py-3 bg-[#333] text-white rounded">SIGN IN</button>
+                            <p className="mt-2 text-base">
+                                <Link to="/signup" className="text-blue-600 text-primary transition-all duration-200 hover:underline">
+                                    Don't have any account
+                                </Link>
+                            </p>
                         </div>
                     </form>
                 </div>

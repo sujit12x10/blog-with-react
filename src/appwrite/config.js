@@ -14,15 +14,13 @@ class AppwriteService {
     }
 
     // Create Post
-    async createPost({postId, title, slug, content, featuredImage, status, userId}){
-        console.log(postId);
-        
+    async createPost({title, category, slug, content, featuredImage, status, userId}){
         try {
             return await this.databases.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 ID.unique(),
-                { title, slug, content, featuredImage, status, userId }
+                { title, category, slug, content, featuredImage, status, userId }
             )
         } catch (error){
             console.log("Appwrite service :: createPost :: error", error)
@@ -30,14 +28,13 @@ class AppwriteService {
     }
 
     // Update Post
-    async updatePost(id, { title, slug, content, featuredImage, status }){
-        
+    async updatePost(id, { title, category, slug, content, featuredImage, status }){
         try{
             return await this.databases.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 id, // Document Id
-                { title, slug, content, featuredImage, status}
+                { title, category, slug, content, featuredImage, status}
             )
         } catch (error){
             console.log("Appwrite service :: updatePost :: error", error);
@@ -122,6 +119,64 @@ class AppwriteService {
             )
         } catch (error){
             return "Appwrite service :: getFilePreview :: error", error
+        }
+    }
+
+    // Get Comment
+    async getComments(postId){
+        const queries = [Query.equal("postId", postId)]
+        
+        try {
+            return await this.databases.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCommentCollectionId,
+                queries
+            )
+        } catch (error){
+            console.log("Appwrite service :: getComments :: error", error)
+            return false
+        }
+    }
+
+    // Create Comment
+    async createComment({postId, userId, content}){
+        try {
+            return await this.databases.createDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCommentCollectionId,
+                ID.unique(),
+                {postId, userId, content}
+            )
+        } catch (error){
+            console.log("Appwrite service :: createComment :: error", error)
+        }
+    }
+
+    // Update Comment
+    async updateComment(id, content){
+        try {
+            return await this.databases.updateDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCommentCollectionId,
+                id, // Documnet Id
+                {content}
+            )
+        } catch (error){
+            console.log("Appwrite service :: updateComment :: error", error)
+        }
+    }
+
+    // Delete Comments
+    async deleteComment(documentId){
+        try {
+            await this.databases.deleteDocument(
+                conf.appwriteDatabaseId,
+                conf.appwriteCommentCollectionId,
+                documentId
+            )
+        } catch (error){
+            console.log("Appwrite service :: deletePost :: error", error)
+            return false
         }
     }
 }

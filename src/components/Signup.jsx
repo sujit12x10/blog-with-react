@@ -36,13 +36,7 @@ export const Signup = () => {
                 <div className="mb-2 flex justify-center">
                     <Logo text="text-gray-900"/>
                 </div>
-                <h2 className="text-center text-2xl mt-5">Create an account with us.</h2>
-                <p className="mt-4 text-center text-base text-black/60">
-                    Already have an account?
-                    <Link to="/login" className="font-medium text-primary transition-all duration-200 hover:underline">
-                        <span className="font-bold ml-2 text-blue-600">Login Here</span>
-                    </Link>
-                </p>
+                <h2 className="text-center text-base uppercase text-[#333]">Create an account with us.</h2>
                 {
                     error && <p className="text-orange-500 mt-8 text-center">
                         {error}
@@ -77,9 +71,14 @@ export const Signup = () => {
                                 required: true,
                             })}
                         />
-                        <button type="submit" className="w-full py-3 bg-[#333] text-white text-sm rounded">
+                        <button type="submit" className="w-full py-3 bg-[#333] text-white text-sm rounded uppercase">
                             Create Account
                         </button>
+                        <p className="mt-2 text-base">
+                            <Link to="/login" className="text-blue-600 text-primary transition-all duration-200 hover:underline">
+                                Already have an account
+                            </Link>
+                        </p>
                     </div>
                 </form>
             </div>

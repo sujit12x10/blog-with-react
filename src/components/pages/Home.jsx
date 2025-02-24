@@ -25,11 +25,14 @@ export const Home = () => {
 
     return (
         posts && <div className="p-8">
-            <Container>
+            {posts.length === 0 ? <div>
+                <h1 className="text-center text-xl">No Posts Found!</h1>
+            </div> 
+            :<Container>
                 <Heading text="BLOGS"/>
                 <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-2">
                     {
-                        posts.map(post => (
+                        posts.slice(0).reverse().map(post => (
                             <div key={post.$id} className="p-2">
                                 {/* Just Cards within a Link */}
                                 <PostCard date={getDate(post)} {...post}/> 
@@ -38,6 +41,7 @@ export const Home = () => {
                     }
                 </div>
             </Container>
+            }
         </div>
     )
 }

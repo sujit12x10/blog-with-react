@@ -20,7 +20,7 @@ export const PostForm = ({post}) => {
 
     useEffect(() => {
         if (post){
-            const array = ["title", "slug", "content", "status"]
+            const array = ["title", "category", "slug", "content", "status"]
             array.map((value) => setValue(value, post[value]))
         }
     }, [post])
@@ -112,7 +112,13 @@ export const PostForm = ({post}) => {
                     className="mb-4"
                     {...register("title", { required: true })}
                 />
-
+                {/* Category */}
+                <Input
+                    label="Category :"
+                    placeholder="Category"
+                    className="mb-4"
+                    {...register("category", {required: true})}
+                />
                 {/* Post content */}
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>

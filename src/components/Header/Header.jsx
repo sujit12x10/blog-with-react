@@ -59,7 +59,7 @@ export const Header = () => {
                     { navItems.map((item) => (
                             <li key={item.name}>
                                 <NavLink to={item.slug} className={(isActive) => 
-                                    `uppercase font-semibold inline-block px-4 py-2 duration-200 hover:bg-black hover:text-cyan-300 rounded text-base font-poppins ${pathname === item.slug ? "text-cyan-200" : "text-[aliceblue]"}`
+                                    `uppercase font-semibold inline-block px-4 py-2 duration-200 hover:text-cyan-300 rounded text-sm font-poppins ${pathname === item.slug ? "text-cyan-200" : "text-[aliceblue]"}`
                                 }>
                                     {item.name}
                                 </NavLink>
@@ -68,7 +68,7 @@ export const Header = () => {
 
                     {
                          (
-                            <li onClick={handleLogout} className="inline-block px-4 py-2 duration-200 hover:bg-black hover:text-cyan-300 rounded text-base uppercase font-poppins font-semibold text-[aliceblue] cursor-pointer">
+                            <li onClick={handleLogout} className="inline-block px-4 py-2 duration-200 hover:text-cyan-300 rounded text-sm uppercase font-poppins font-semibold text-[aliceblue] cursor-pointer">
                                 Logout
                             </li>
                         )

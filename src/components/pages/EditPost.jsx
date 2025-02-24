@@ -10,7 +10,7 @@ export const EditPost = () => {
 
     useEffect(() => {
         if (slug) {
-            appwriteService.getPost(slug.slug)
+            appwriteService.getPost(slug.documentId)
             .then(data => {
                 if (data){
                     setPost(data)
