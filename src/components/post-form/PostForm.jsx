@@ -25,7 +25,6 @@ export const PostForm = ({post}) => {
         }
     }, [post])
 
-
     const handleChange = (event) => {
         const {name, value, type, checked} = event.target
         setPostDetail((prevData) => ({

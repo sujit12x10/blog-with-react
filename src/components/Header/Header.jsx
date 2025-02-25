@@ -14,12 +14,10 @@ import { GrClose } from "react-icons/gr"
 
 export const Header = () => {
     const authStatus = useSelector(state => state.auth.status)
+    const [isMenu, setIsMenu] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const {pathname} = useLocation()
-    const [isOn, setIsOn] = useState(false)
-    const displayRef = useRef(null)
-    const display = !isOn ? "hidden" : ""
  
     // Header's Navigation Items
     const navItems = [
@@ -46,12 +44,12 @@ export const Header = () => {
 
     return (
         <header className="sticky z-50 top-0">
-            <nav ref={displayRef} className=" bg-gray-900 shadow-black px-4 py-2 md:flex">
-                <div className="mt-1 mb-2">
+            <nav className=" bg-gray-900 shadow-black md:px-4 py-2 md:flex">
+                <div className="mt-1 m-2">
                     <Logo />
-                    <button onClick={() => setIsOn(!isOn)} className="absolute right-2 top-4 md:hidden">
-                        {
-                            !isOn ? <GiHamburgerMenu size={30} color="white" className=""/> : <GrClose size={25} color="white"/>
+                    <button onClick={() => setIsMenu(!isMenu)} className="absolute right-2 top-4 md:hidden outline-none">
+                        {isMenu ? <GrClose size={20} color="white"/>
+                                : <GiHamburgerMenu size={20} color="white" className=""/>  
                         }
                     </button>
                 </div>
@@ -76,24 +74,19 @@ export const Header = () => {
                 </ul>
                 
                 {/* For Mobile Screen */}
-                <ul className={`duration-200 ${display} md:hidden duration-200`}>
-                    { navItems.map((item) => item.active ? (
-                                <li onClick={() => setIsOn(false)} key={item.name} className="hover:bg-gray-700 hover:text-cyan-300 py-3 duration-200 mx-auto flex first:border-t-[1px] first:mt-4">
-                                    <NavLink to={item.slug} className={(isActive) => 
-                                        `mx-auto duration-200 text-xl ${pathname === item.slug ? "text-cyan-200" : "text-white"}`
-                                    }>
-                                        {item.name}
-                                    </NavLink>
-                                </li>
-                            ) : null)}
-
-                        {
-                            authStatus && (
-                                <li onClick={() => setIsOn(false)} className="flex justify-center">
-                                    <Logout />
-                                </li>
-                            )
-                        }
+                <ul className={`absolute ${isMenu ? "top-14" : "-top-40"} w-screen md:hidden border-t bg-gray-900 duration-700 -z-10`}>
+                    {navItems.map(item => (
+                        <NavLink to={item.slug}>
+                            <li key={item.name} className="text-white hover:bg-gray-700 hover:text-cyan-300 py-2 px-3 cursor-pointer uppercase text-sm">
+                                {item.name}
+                            </li>
+                        </NavLink>
+                    ))}
+                    <NavLink to="/login">
+                        <li className="text-white hover:bg-gray-700 hover:text-cyan-300 py-2 px-3 cursor-pointer uppercase text-sm">
+                            Login
+                        </li>
+                    </NavLink>
                 </ul>
             </nav>
         </header>
